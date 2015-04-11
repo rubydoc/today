@@ -18,7 +18,8 @@ module Today
         at = argv[1] || Date.today
       end
 
-      where("DATE(#{key.to_s}) = DATE(?)", at)
+      where("#{key.to_s} > ?", at.at_beginning_of_day)
+      .where("#{key.to_s} < ?", at.at_end_of_day)
     end
 
     def yesterday key=:created_at
